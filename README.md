@@ -12,7 +12,7 @@ python server.py
 
 Abra **http://localhost:8000** no navegador.
 
-> Abrir o `index.html` direto (sem o servidor) não funciona direito: os dados da PubChem passam pelo `server.py`.
+> O jogo é só HTML/JS: a PubChem é consultada direto do navegador. Por isso ele também funciona hospedado na **Vercel** (ou qualquer hospedagem estática). O `server.py` é só um servidor local.
 
 ## Como jogar
 
@@ -46,7 +46,7 @@ Cada bloco é **infinito**: as moléculas vêm em baralho, da mais fácil à mai
 | `index.html` | Página e estilos (Tailwind, Lucide e Three.js via CDN) |
 | `jogo.js` | Cena 3D, física das ligações, painel, tutorial e fluxo do jogo |
 | `moleculas.js` | Banco de moléculas, valências, regras de isômeros e regras de cada bloco |
-| `server.py` | Servidor local e proxy (com cache) da API da PubChem |
+| `server.py` | Servidor local para testar no computador |
 | `arly.png` | Mascote |
 
 ## Adicionar uma molécula

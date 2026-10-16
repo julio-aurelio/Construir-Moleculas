@@ -310,8 +310,11 @@ const pubchemCache = {};
 async function buscarPubChem(mol) {
     if (!(mol.en in pubchemCache)) {
         try {
-            const r = await fetch('/api/molecule/' + encodeURIComponent(mol.en));
-            pubchemCache[mol.en] = r.ok ? await r.json() : null;
+            // direto do navegador (a PubChem libera CORS): funciona em hospedagem estática como a Vercel
+            const r = await fetch('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/' + encodeURIComponent(mol.en) +
+                '/property/MolecularWeight,IUPACName,CanonicalSMILES,ConnectivitySMILES/JSON');
+            const p = r.ok ? (await r.json()).PropertyTable.Properties[0] : null;
+            pubchemCache[mol.en] = p && { cid: p.CID, massa: +p.MolecularWeight, iupac: p.IUPACName, smiles: p.CanonicalSMILES ?? p.ConnectivitySMILES };
         } catch { pubchemCache[mol.en] = null; }
     }
     return pubchemCache[mol.en];
@@ -362,7 +365,7 @@ async function mostrarPubChem(m) {
             <div><b>Massa molar:</b> <span class="font-mono">${d.massa.toFixed(2)} g/mol</span></div>
             <div><b>SMILES:</b> <span class="font-mono break-all">${d.smiles ?? '-'}</span></div>
             <a href="https://pubchem.ncbi.nlm.nih.gov/compound/${d.cid}" target="_blank" class="text-blue-600 hover:underline"><i data-lucide="external-link"></i> Ver na PubChem</a>
-        </div>` : `<div class="text-xs text-gray-400"><i data-lucide="wifi-off"></i> Não foi possível consultar a PubChem (rode pelo server.py com internet).</div>`;
+        </div>` : `<div class="text-xs text-gray-400"><i data-lucide="wifi-off"></i> Não foi possível consultar a PubChem (verifique a internet).</div>`;
     icones();
 }
 
