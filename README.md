@@ -1,5 +1,7 @@
 # Construtor de Moléculas
 
+![Capa do jogo](capa.png)
+
 Jogo educativo de Química (TCC) em que o aluno monta moléculas em **3D** ligando átomos. A molécula fica pronta quando nenhum átomo tem valência livre. Quando ela é montada, o jogo mostra os dados reais da molécula vindos da **PubChem**.
 
 ## Como rodar
